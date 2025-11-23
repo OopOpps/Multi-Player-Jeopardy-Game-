@@ -1,4 +1,4 @@
-package com.oopopps.scoreboard;
+package com.oopopps.display;
 
 import java.util.HashMap;
 import java.util.Map;

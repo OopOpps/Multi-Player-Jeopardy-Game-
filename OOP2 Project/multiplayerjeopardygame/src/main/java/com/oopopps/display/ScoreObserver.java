@@ -1,4 +1,4 @@
-package com.oopopps.scoreboard;
+package com.oopopps.display;
 import com.oopopps.Player;
 
 public interface ScoreObserver {
