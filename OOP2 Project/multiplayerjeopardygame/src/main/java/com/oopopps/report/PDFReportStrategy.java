@@ -2,7 +2,7 @@ package com.oopopps.report;
 
 import java.nio.file.Path;
 import java.util.List;
-import com.uoopopps.Player;
+import com.oopopps.Player;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
