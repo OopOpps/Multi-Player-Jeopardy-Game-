@@ -1,61 +1,94 @@
 package com.oopopps;
 
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import java.io.FileReader;
+import java.util.*;
+
 import org.json.*;
 
 public class JSONQuestionParser implements QuestionParser {
+
     @Override
     public List<Question> parse(Path file) throws Exception {
         List<Question> list = new ArrayList<>();
-        
-        // Read entire file as string
-        FileReader reader = new FileReader(file.toString());
-        StringBuilder content = new StringBuilder();
-        int ch;
-        while ((ch = reader.read()) != -1) {
-            content.append((char) ch);
-        }
-        reader.close();
-        
-        // Parse JSON
-        JSONObject root = new JSONObject(content.toString());
-        
-        // Get the questions array
-        JSONArray questionsArray;
-        if (root.has("JeopardyQuestions")) {
-            questionsArray = root.getJSONArray("JeopardyQuestions");
-        } 
-		else {
-            questionsArray = root.getJSONArray("questions");
-        }
-        
-        // Process each question
-        for (int i = 0; i < questionsArray.length(); i++) {
-            JSONObject qObj = questionsArray.getJSONObject(i);
-            Question q = new Question();
-            
-            q.setCategory(qObj.getString("Category"));
-            q.setValue(qObj.getInt("Value"));
-            q.setQuestionText(qObj.getString("QuestionText"));
-            q.setCorrectAnswer(qObj.getString("CorrectAnswer"));
-            
-            // Handle options
-            JSONObject optionsObj = qObj.getJSONObject("Options");
-            Map<String, String> options = new HashMap<>();
-            String[] keys = JSONObject.getNames(optionsObj);
-            for (String key : keys) {
-                options.put(key, optionsObj.getString(key));
+
+        String fileName = file.getFileName().toString();
+        String content;
+
+        // Try loading from resources
+        InputStream is = getClass().getClassLoader().getResourceAsStream(fileName);
+
+        if (is != null) {
+            content = new String(is.readAllBytes());
+        } else {
+            // Fallback to filesystem path
+            Path resolved = file.toAbsolutePath().normalize();
+
+            if (!Files.exists(resolved)) {
+                throw new Exception("JSON file not found in resources or filesystem: " + fileName);
             }
+
+            content = Files.readString(resolved);
+        }
+
+        content = content.trim();
+        JSONArray arr;
+
+        // NEW: Detect raw JSON array (your file format)
+        if (content.startsWith("[")) {
+            arr = new JSONArray(content);
+        } else {
+            JSONObject root = new JSONObject(content);
+
+            if (root.has("JeopardyQuestions")) {
+                arr = root.getJSONArray("JeopardyQuestions");
+            } else if (root.has("questions")) {
+                arr = root.getJSONArray("questions");
+            } else {
+                throw new Exception("JSON does not contain 'JeopardyQuestions' or 'questions' array");
+            }
+        }
+
+        // Parse questions
+        for (int i = 0; i < arr.length(); i++) {
+            JSONObject qObj = arr.getJSONObject(i);
+            Question q = new Question();
+
+            q.setCategory(getSafeString(qObj, "Category"));
+            q.setValue(getSafeInt(qObj, "Value"));
+
+            // Support both "QuestionText" and "Question"
+            if (qObj.has("QuestionText"))
+                q.setQuestionText(qObj.getString("QuestionText"));
+            else if (qObj.has("Question"))
+                q.setQuestionText(qObj.getString("Question"));
+            else
+                q.setQuestionText("");
+
+            q.setCorrectAnswer(getSafeString(qObj, "CorrectAnswer"));
+
+            Map<String, String> options = new LinkedHashMap<>();
+            if (qObj.has("Options")) {
+                JSONObject opts = qObj.getJSONObject("Options");
+
+                for (String key : opts.keySet()) {
+                    options.put(key, opts.getString(key));
+                }
+            }
+
             q.setOptions(options);
-            
             list.add(q);
         }
-        
+
         return list;
+    }
+
+    private String getSafeString(JSONObject obj, String key) {
+        return obj.has(key) ? obj.getString(key) : "";
+    }
+
+    private int getSafeInt(JSONObject obj, String key) {
+        return obj.has(key) ? obj.getInt(key) : 0;
     }
 }
