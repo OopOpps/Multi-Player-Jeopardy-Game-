@@ -1,4 +1,4 @@
-package com.opopps.report;
+package com.oopopps.report;
 
 import java.nio.file.Path;
 import java.util.List;
