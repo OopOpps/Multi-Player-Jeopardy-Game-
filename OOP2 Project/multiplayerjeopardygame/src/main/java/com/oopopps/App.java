@@ -4,7 +4,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-public class Main {
+public class App {
     public static void main(String[] args) {
         System.out.println("Welcome to UWI Jeopardy Game");
         Scanner inputScanner = new Scanner(System.in);
@@ -39,4 +39,5 @@ public class Main {
         }
     }
 }
+
 
