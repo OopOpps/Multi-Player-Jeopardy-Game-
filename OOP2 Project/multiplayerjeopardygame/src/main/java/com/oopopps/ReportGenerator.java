@@ -2,7 +2,7 @@ package com.oopopps;
 
 import java.nio.file.Path;
 import java.util.List;
-import com.uwi.jeopardy.report.ReportStrategy;
+import com.oopopps.report.*;
 
 //this class generates reports using the strategy pattern
 public class ReportGenerator {
