@@ -3,7 +3,7 @@ package com.oopopps.report;
 import java.nio.file.Path;
 import java.io.PrintWriter;
 import java.util.List;
-import com.oopoppsPlayer;
+import com.oopopps.Player;
 
 //this class implements the ReportStrategy interface to generate text reports
 public class TextReportStrategy implements ReportStrategy {
