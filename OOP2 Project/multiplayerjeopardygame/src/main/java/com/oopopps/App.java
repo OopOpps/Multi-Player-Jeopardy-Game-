@@ -6,7 +6,12 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-        System.out.println("Welcome to UWI Jeopardy Game");
+        
+            System.out.println("===================================================");
+            System.out.println("                 J E O P A R D Y                 ");
+            System.out.println("                      G A M E                     ");
+            System.out.println("===================================================")
+
         Scanner inputScanner = new Scanner(System.in);
         
         System.out.println("Please type the path to your question file (XML, JSON, or CSV)");

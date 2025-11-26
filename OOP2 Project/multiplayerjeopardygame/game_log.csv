@@ -1,0 +1,5 @@
+Case_ID,Player_ID,Activity,Timestamp,Category,Question_Value,Answer_Given,Result,Score_After_Play
+GAME-1764186597405,,Game Started,2025-11-26T19:49:57.483412963Z,,,,,0
+GAME-1764186597405,P1,Player Joined,2025-11-26T19:50:06.594071448Z,,,tamika,,0
+GAME-1764186597405,P1,Exit Game,2025-11-26T19:54:47.993659340Z,,,,,0
+GAME-1764186597405,,Reports Generated,2025-11-26T19:54:48.503958173Z,,,,,0
