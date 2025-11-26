@@ -6,11 +6,23 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
+
         
-            System.out.println("===================================================");
-            System.out.println("                 J E O P A R D Y                 ");
-            System.out.println("                      G A M E                     ");
-            System.out.println("===================================================")
+        System.out.println("    \n                          Welcome to                             \n ");
+        System.out.println("     ██╗███████╗ ██████╗ ██████╗  █████╗ ██████╗ ██████╗ ██╗   ██╗");
+        System.out.println("     ██║██╔════╝██╔═══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗╚██╗ ██╔╝");
+        System.out.println("     ██║█████╗  ██║   ██║██████╔╝███████║██████╔╝██║  ██║ ╚████╔╝ ");
+        System.out.println("██   ██║██╔══╝  ██║   ██║██╔═══╝ ██╔══██║██╔══██╗██║  ██║  ╚██╔╝  ");
+        System.out.println("╚█████╔╝███████╗╚██████╔╝██║     ██║  ██║██║  ██║██████╔╝   ██║   ");
+        System.out.println(" ╚════╝ ╚══════╝ ╚═════╝ ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝    ╚═╝   ");
+        System.out.println("                                                                   ");
+
+
+        System.out.println("\n===================================================================");
+        System.out.println("                   A MULTIPLAYER JEOPARDY GAME                     ");
+        System.out.println("                          BY OOPOPPS                               ");
+        System.out.println("===================================================================\n");
+
 
         Scanner inputScanner = new Scanner(System.in);
         

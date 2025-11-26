@@ -41,7 +41,8 @@ public class GameEngine {
             while (!remainingQuestions.isEmpty()) {
                 Player currentPlayer = players.get(currentPlayerIndex);
 
-                System.out.println("\n--- " + currentPlayer.getName() + "'s Turn ---");
+                System.out.println("\n===================================================================");
+                System.out.println("                      " + currentPlayer.getName() + "'s Turn\n");
                 System.out.println("Current Score: " + currentPlayer.getScore());
                 System.out.println(scoreBoard.render());
 
@@ -98,6 +99,7 @@ public class GameEngine {
 
                 remainingQuestions.remove(selectedQuestion);
                 currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+
             }
 
             System.out.println("\n=== GAME OVER ===");
@@ -136,19 +138,28 @@ public class GameEngine {
             categories.computeIfAbsent(q.getCategory(), k -> new ArrayList<>()).add(q.getValue());
         }
 
-        System.out.println("Available Questions:");
+        System.out.println("-------------- AVAILABLE QUESTIONS --------------\n");
+        
         for (String category : categories.keySet()) {
             List<Integer> values = categories.get(category);
             Collections.sort(values);
-            System.out.println("  " + category + ": " + values);
+            StringBuilder valueStr = new StringBuilder();
+            
+            for (Integer val : values) {
+                valueStr.append(String.format("%4d", val)); 
+            }
+
+            System.out.printf(" %-25s : %s%n", category, valueStr.toString());
+            System.out.println();
         }
     }
 
     private Question findQuestion(List<Question> list, String category, int value) {
+        String inputLower = category.toLowerCase();
         return list.stream()
-                .filter(q -> q.getCategory().equals(category) && q.getValue() == value)
-                .findFirst()
-                .orElse(null);
+            .filter(q -> q.getCategory().toLowerCase().equals(inputLower) && q.getValue() == value)
+            .findFirst()
+            .orElse(null);
     }
 
     private void showFinalScores() {
