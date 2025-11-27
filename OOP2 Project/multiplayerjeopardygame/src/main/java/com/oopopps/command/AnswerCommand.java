@@ -4,6 +4,14 @@ import com.oopopps.Player;
 import com.oopopps.Question;
 import com.oopopps.EventLogger;
 import com.oopopps.display.ScoreObserver;
+/**
+ * Represents a command for answering a question in the Jeopardy game.
+ * Implements the Command pattern to encapsulate all information needed
+ * to execute and undo a player's answer attempt.
+ * 
+ * This command handles score calculation, player updates, logging,
+ * and scoreboard notifications when executed or undone.
+ */
 
 public class AnswerCommand implements Command {
     private final Player player;
@@ -15,6 +23,15 @@ public class AnswerCommand implements Command {
     private boolean executed = false;
     private int delta = 0;
     private boolean correct = false;   // Added so GameEngine can read it
+    /**
+     * Constructs an AnswerCommand with all necessary dependencies.
+     * 
+     * @param player the player attempting to answer the question
+     * @param question the question being answered
+     * @param givenAnswer the answer provided by the player
+     * @param logger the event logger for recording game actions
+     * @param scoreboard the score observer for updating display
+     */
 
     public AnswerCommand(Player player, Question question, String givenAnswer,
                          EventLogger logger, ScoreObserver scoreboard) {
@@ -25,6 +42,11 @@ public class AnswerCommand implements Command {
         this.logger = logger;
         this.scoreboard = scoreboard;
     }
+    /**
+     * Executes the answer command by evaluating the player's answer,
+     * updating scores, notifying observers, and logging the result.
+     * Handles answer normalization for flexible input formats.
+     */
 
     @Override
     public void execute() {
@@ -57,7 +79,12 @@ public class AnswerCommand implements Command {
 
         executed = true;
     }
-
+    /**
+     * Reverses the effects of executing this command by reverting
+     * score changes and updating observers.
+     * Only has effect if the command was previously executed.
+     */
+    
     @Override
     public void undo() {
         if (!executed) return;
@@ -69,7 +96,12 @@ public class AnswerCommand implements Command {
 
         executed = false;
     }
-
+    /**
+     * Returns a human-readable description of this command.
+     * 
+     * @return a string describing which player answered which category for how many points
+     */
+    
     @Override
     public String getDescription() {
         return String.format(
@@ -79,12 +111,22 @@ public class AnswerCommand implements Command {
             question.getValue()
         );
     }
-
+    /**
+     * Checks if the player's answer was correct.
+     * 
+     * @return true if the answer was correct, false otherwise
+     */
+    
     // === Added getters so GameEngine works ===
     public boolean isCorrect() {
         return correct;
     }
-
+    /**
+     * Gets the score change resulting from this answer.
+     * 
+     * @return the points gained or lost from this answer
+     */
+    
     public int getDelta() {
         return delta;
     }
