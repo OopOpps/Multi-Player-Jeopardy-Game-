@@ -13,11 +13,22 @@ import org.junit.jupiter.api.io.TempDir;
 import com.oopopps.command.AnswerCommand;
 import com.oopopps.display.ScoreObserver;
 
+
+/**
+ * Unit tests for the AnswerCommand class functionality
+ * Tests answer validation, score calculation, undo operations, and command descriptions
+ */
 class AnswerCommandTest {
 
+    /** Temporary directory for test file creation and cleanup */
     @TempDir
     Path tempDir;
 
+     /**
+     * Creates a sample question for testing with predefined category, value, text, and options
+     * 
+     * @return Question object with Math category, 100 value, and basic arithmetic question
+     */
     private Question makeSampleQuestion() {
         Question q = new Question();
         q.setCategory("Math");
@@ -35,14 +46,32 @@ class AnswerCommandTest {
         return q;
     }
 
+    /**
+     * Creates a no-op scoreboard observer for testing
+     * 
+     * @return ScoreObserver that performs no action on update
+     */
     private ScoreObserver testerScoreboard() {
         return player -> {};
     }
 
+    /**
+     * Factory method to create Player objects with specified ID and name.
+     * 
+     * @param id Unique player identifier
+     * @param name Display name for the player
+     * @return New Player instance with given ID and name
+     */
     private Player makePlayer(String id, String name) {
         return new Player(id, name);
     }
 
+     /**
+     * Tests that a correct answer increases player score by question value
+     * Verifies command correctness, score, and final player score
+     * 
+     * @throws Exception if file operations or command execution fails
+     */
     @Test
     void correctAnswerUpdatesScore() throws Exception {
         Player player = makePlayer("P1", "Dee");
@@ -59,6 +88,12 @@ class AnswerCommandTest {
         logger.close();
     }
 
+    /**
+     * Tests that an incorrect answer decreases player score by question value
+     * Verifies command incorrectness, negative score, and final player score
+     * 
+     * @throws Exception if file operations or command execution fails
+     */
     @Test
     void incorrectAnswerUpdatesScore() throws Exception {
         Player player = makePlayer("P2", "Frank");
@@ -75,6 +110,12 @@ class AnswerCommandTest {
         logger.close();
     }
 
+    /**
+     * Tests that undo operation reverts player score to its previous state
+     * Verifies score changes after execution and restoration after undo
+     * 
+     * @throws Exception if file operations or command execution fails
+     */
     @Test
     void undoRevertsScore() throws Exception {
         Player player = makePlayer("P3", "Charlie");
@@ -91,6 +132,12 @@ class AnswerCommandTest {
         logger.close();
     }
 
+    /**
+     * Tests that command description contains relevant player and question information.
+     * Verifies presence of player name, question category, and question value in description.
+     * 
+     * @throws Exception if file operations or command execution fails
+     */
     @Test
     void descriptionContainsPlayerAndQuestionInfo() throws Exception {
         Player player = makePlayer("P4", "Dennis");

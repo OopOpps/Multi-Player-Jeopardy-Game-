@@ -8,11 +8,29 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+/**
+ * Process mining compliance test suite for event logging functionality.
+ * Validates that game activity logging meets process mining standards
+ * for data analysis, workflow tracking, and behavioral pattern recognition.
+ * Ensures CSV output format compatibility with external process mining tools.
+ */
 class ProcessMiningLogTest {
 
+    /**
+     * Temporary directory for isolated log file testing with automatic cleanup.
+     * Ensures test independence and prevents file system pollution between test executions.
+     */
     @TempDir
     Path tempDir;
 
+    /**
+     * Tests complete process mining log format compliance and data structure integrity.
+     * Validates that logged events maintain proper CSV structure, contain all required
+     * process mining columns, and preserve complete player session workflows for
+     * subsequent analysis in process mining platforms.
+     * 
+     * @throws Exception if file I/O operations fail or log format validation encounters errors
+     */
     @Test
     void testLogFormat() throws Exception {
         Path logFile = tempDir.resolve("process_log.csv");
@@ -44,6 +62,14 @@ class ProcessMiningLogTest {
         }
     }
 
+    /**
+     * Tests robust handling of null values and incomplete data in event logging.
+     * Validates that the logging system gracefully processes missing information
+     * without compromising data structure integrity or process mining compatibility.
+     * Ensures system events and partial data scenarios are properly recorded.
+     * 
+     * @throws Exception if file operations fail or null value handling encounters issues
+     */
     @Test
     void testNullValues() throws Exception {
         Path logFile = tempDir.resolve("null_test_log.csv");
