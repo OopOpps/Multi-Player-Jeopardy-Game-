@@ -8,8 +8,19 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.*;
 
+/**
+ * Parses XML files containing Jeopardy questions into Question objects.
+ * Uses DOM parsing to extract question data from structured XML documents.
+ */
 public class XMLQuestionParser implements QuestionParser {
 
+    /**
+     * Parses an XML file and converts it into a list of Question objects.
+     * 
+     * @param file the path to the XML file to parse
+     * @return a list of Question objects parsed from the file
+     * @throws Exception if file cannot be read or parsed
+     */
     @Override
     public List<Question> parse(Path file) throws Exception {
         List<Question> list = new ArrayList<>();
@@ -62,6 +73,13 @@ public class XMLQuestionParser implements QuestionParser {
         return list;
     }
 
+    /**
+     * Extracts text content from a child element of the given parent element.
+     * 
+     * @param parent the parent element to search within
+     * @param tagName the name of the child element
+     * @return the text content of the child element, or empty string if not found
+     */
     private String getElementText(Element parent, String tagName) {
         NodeList list = parent.getElementsByTagName(tagName);
         if (list.getLength() == 0) return "";
