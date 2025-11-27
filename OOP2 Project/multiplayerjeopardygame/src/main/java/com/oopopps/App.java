@@ -3,8 +3,18 @@ package com.oopopps;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
+/**
+ * Main application class that serves as the entry point for the Jeopardy game.
+ * Handles initial setup, user input for question file selection, and game initialization.
+ * Displays welcome banner and manages application lifecycle.
+ */
 
 public class App {
+   /**
+     * Main method that starts the Jeopardy game application.
+     * 
+     * @param args command line arguments (not used)
+     */
     public static void main(String[] args) {
 
         
@@ -56,5 +66,6 @@ public class App {
         }
     }
 }
+
 
 
