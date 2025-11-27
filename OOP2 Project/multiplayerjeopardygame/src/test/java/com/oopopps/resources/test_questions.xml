@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questions>
+  <QuestionItem>
+    <Category>Math</Category>
+    <Value>100</Value>
+    <QuestionText>What is 1 + 1?</QuestionText>
+    <Options>
+      <A>1</A>
+      <B>2</B>
+      <C>3</C>
+      <D>4</D>
+    </Options>
+    <CorrectAnswer>B</CorrectAnswer>
+  </QuestionItem>
+</questions>
