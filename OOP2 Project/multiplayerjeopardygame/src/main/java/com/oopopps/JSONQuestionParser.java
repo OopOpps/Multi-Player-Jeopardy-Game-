@@ -7,8 +7,19 @@ import java.util.*;
 
 import org.json.*;
 
+/**
+ * Parses JSON files containing Jeopardy questions into Question objects.
+ * Supports multiple JSON formats and both classpath resource loading and filesystem access.
+ */
 public class JSONQuestionParser implements QuestionParser {
 
+    /**
+     * Parses a JSON file and converts it into a list of Question objects.
+     * 
+     * @param file the path to the JSON file to parse
+     * @return a list of Question objects parsed from the file
+     * @throws Exception if file cannot be read or parsed
+     */
     @Override
     public List<Question> parse(Path file) throws Exception {
         List<Question> list = new ArrayList<>();
@@ -84,10 +95,24 @@ public class JSONQuestionParser implements QuestionParser {
         return list;
     }
 
+    /**
+     * Safely extracts a string value from a JSON object.
+     * 
+     * @param obj the JSON object to extract from
+     * @param key the key to look up
+     * @return the string value or empty string if key doesn't exist
+     */
     private String getSafeString(JSONObject obj, String key) {
         return obj.has(key) ? obj.getString(key) : "";
     }
 
+    /**
+     * Safely extracts an integer value from a JSON object.
+     * 
+     * @param obj the JSON object to extract from
+     * @param key the key to look up
+     * @return the integer value or 0 if key doesn't exist
+     */
     private int getSafeInt(JSONObject obj, String key) {
         return obj.has(key) ? obj.getInt(key) : 0;
     }
