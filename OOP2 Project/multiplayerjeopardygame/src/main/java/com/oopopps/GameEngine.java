@@ -7,7 +7,10 @@ import java.nio.file.Path;
 import java.util.*;
 
 /**
- * GameEngine runs the CLI Jeopardy game using design patterns
+ * Main game engine that orchestrates the Jeopardy game flow.
+ * Manages players, questions, turns, and game state.
+ * Implements the core game loop and coordinates between various components
+ * including commands, observers, and reporting systems.
  */
 public class GameEngine {
     private final List<Question> questions;
@@ -18,6 +21,12 @@ public class GameEngine {
     private final RemoteControl remoteControl = new RemoteControl();
     private final ScoreBoard scoreBoard = new ScoreBoard();
 
+    /**
+     * Constructs a GameEngine with questions loaded from the specified file.
+     * 
+     * @param questionFile the path to the file containing game questions
+     * @throws Exception if questions cannot be loaded or parsed
+     */
     public GameEngine(Path questionFile) throws Exception {
         this.gameId = "GAME-" + System.currentTimeMillis();
 
@@ -29,6 +38,11 @@ public class GameEngine {
         logger.log(null, "Game Started", null, null, null, "", 0);
     }
 
+    /**
+     * Starts and runs the main game loop.
+     * Handles player setup, turn management, question selection,
+     * answer processing, and game completion.
+     */
     public void run() {
         try {
             setupPlayers();
@@ -115,8 +129,11 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Sets up players for the game by collecting names and initializing Player objects.
+     */
     private void setupPlayers() {
-        System.out.print("How many players? (1–4): ");
+        System.out.print("How many players? (1 - 4): ");
         int numPlayers = Integer.parseInt(scanner.nextLine().trim());
 
         for (int i = 1; i <= numPlayers; i++) {
@@ -131,6 +148,11 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Displays all available questions grouped by category with their point values.
+     * 
+     * @param questions the list of remaining questions to display
+     */
     private void showAvailableQuestions(List<Question> questions) {
         Map<String, List<Integer>> categories = new LinkedHashMap<>();
 
@@ -154,6 +176,14 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Finds a specific question by category and point value.
+     * 
+     * @param list the list of questions to search
+     * @param category the category to match
+     * @param value the point value to match
+     * @return the matching Question or null if not found
+     */
     private Question findQuestion(List<Question> list, String category, int value) {
         String inputLower = category.toLowerCase();
         return list.stream()
@@ -162,6 +192,9 @@ public class GameEngine {
             .orElse(null);
     }
 
+    /**
+     * Displays final scores and announces the winner.
+     */
     private void showFinalScores() {
         System.out.println("Final Scores:");
         for (Player p : players) {
@@ -172,6 +205,11 @@ public class GameEngine {
         System.out.println("Winner: " + winner.getName() + "!");
     }
 
+    /**
+     * Generates game reports in multiple formats using the Strategy pattern.
+     * 
+     * @param turnHistory the history of all turns taken during the game
+     */
     private void generateReports(List<String> turnHistory) {
         try {
             System.out.println("Generating reports...");
@@ -193,6 +231,7 @@ public class GameEngine {
 
         } catch (Exception e) {
             System.out.println("Error generating reports: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
