@@ -11,8 +11,20 @@ import java.io.InputStreamReader;
 import java.io.FileReader;
 import java.nio.file.Files;
 
+/**
+ * Parses CSV files containing Jeopardy questions into Question objects.
+ * Supports both classpath resource loading and filesystem access.
+ * Handles quoted CSV fields and flexible column naming conventions.
+ */
 public class CSVQuestionParser implements QuestionParser {
 
+    /**
+     * Parses a CSV file and converts it into a list of Question objects.
+     * 
+     * @param file the path to the CSV file to parse
+     * @return a list of Question objects parsed from the file
+     * @throws Exception if file cannot be read or parsed
+     */
     @Override
     public List<Question> parse(Path file) throws Exception {
         List<Question> list = new ArrayList<>();
@@ -100,7 +112,12 @@ public class CSVQuestionParser implements QuestionParser {
     }
 
 
-    // Safe CSV splitting that supports quoted text
+    /**
+     * Safely splits a CSV line into tokens, handling quoted fields that may contain commas.
+     * 
+     * @param line the CSV line to split
+     * @return an array of tokenized field values
+     */
     private String[] splitCSV(String line) {
         List<String> tokens = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
