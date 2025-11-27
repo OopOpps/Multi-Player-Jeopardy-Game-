@@ -51,8 +51,8 @@ public class XMLQuestionParser implements QuestionParser {
             q.setQuestionText(getElementText(questionElement, "QuestionText"));
             q.setCorrectAnswer(getElementText(questionElement, "CorrectAnswer"));
 
-            // Parse options
-            Map<String, String> options = new HashMap<>();
+            // Parse options - Use LinkedHashMap to preserve order
+            Map<String, String> options = new LinkedHashMap<>(); // CHANGED: HashMap -> LinkedHashMap
             NodeList optionParent = questionElement.getElementsByTagName("Options");
             if (optionParent.getLength() > 0) {
                 NodeList children = optionParent.item(0).getChildNodes();
