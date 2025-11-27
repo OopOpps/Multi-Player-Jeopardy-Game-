@@ -5,8 +5,21 @@ import java.io.PrintWriter;
 import java.util.List;
 import com.oopopps.Player;
 
-//this class implements the ReportStrategy interface to generate text reports
+/**
+ * Implements the ReportStrategy interface to generate text reports.
+ * Creates plain text files with formatted game results and turn history.
+ */
 public class TextReportStrategy implements ReportStrategy {
+    
+    /**
+     * Generates a text report at the specified path with game results.
+     * 
+     * @param path the file path where the text file will be saved
+     * @param caseId the unique identifier for this game session
+     * @param players the list of players who participated
+     * @param turns the history of turns taken during the game
+     * @throws Exception if file writing fails
+     */
     @Override
     public void generate(Path path, String caseId, List<Player> players, List<String> turns) throws Exception {
         try (PrintWriter pw = new PrintWriter(path.toFile())) {
